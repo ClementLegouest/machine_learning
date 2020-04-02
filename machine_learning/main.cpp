@@ -1,7 +1,13 @@
+//
+// Author :	Clément Legouest
+// Date :	2020/04/02
+//
+
 #include <iostream>
 #include <Eigen/Dense>
 
 #include "functions.h"
+#include "utils.h"
 
 int main(int argc, char *argv[]) {
 	
@@ -14,9 +20,10 @@ int main(int argc, char *argv[]) {
 	y << 24, 22, 23, 25, 23, 26, 25, 32;
 	// End of hardcoded matrix to remove for final version
 
-	std::cout << "Matrice x : " << std::endl << x << std::endl;
-	std::cout << "Matrice y : " << std::endl << y << std::endl;
-	std::cout << "w(x, y) : " << std::endl << W(x, y) << std::endl;
+	displayAMatrix(x, "x");
+	displayAMatrix(y, "y");
+	displayAMatrix(W(x, y), "w(x, y)");
+	iterrative_W(x, y, getARandom(-1.00, 1.00), 1);
 
 	std::cin.get();
 }
