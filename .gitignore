@@ -1,0 +1,10 @@
+machine_learning/*.vcxproj
+machine_learning/*.vcxproj.filters
+machine_learning/*.vcxproj.user
+machine_learning/Debug/*
+machine_learning/v16/*
+
+.vs/*
+
+Debug/*
+*.sln
