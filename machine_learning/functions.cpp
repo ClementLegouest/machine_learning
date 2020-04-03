@@ -50,6 +50,12 @@ Eigen::MatrixXd g(Eigen::MatrixXd matrixX, Eigen::MatrixXd matrixW) {
 }
 
 
+Eigen::MatrixXd j(Eigen::MatrixXd matrixX, Eigen::MatrixXd matrixY, Eigen::MatrixXd matrixW) {
+    // stub
+    return Eigen::MatrixXd(2, 2);
+}
+
+
 Eigen::MatrixXd initW(Eigen::MatrixXd matrixX) {
     Eigen::MatrixXd result(matrixX.cols(), 1);
 
