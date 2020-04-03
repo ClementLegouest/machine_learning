@@ -10,17 +10,6 @@
 #include "utils.h"
 
 
-// Return a random number between min and max
-double getARandom(double min, double max) {
-    return (rand() / (double)RAND_MAX) * (max - min) + min;
-}
-
-
-double sigmoid(double x) {
-    return 1.0 / ( 1.0 + exp(-x));
-}
-
-
 // Add a column of number at the end
 Eigen::MatrixXd addAColOfNumber(Eigen::MatrixXd matrix, double number) {
     Eigen::MatrixXd tmp(matrix.rows(), 1);
@@ -67,6 +56,7 @@ Eigen::MatrixXd iterrative_W(Eigen::MatrixXd matrixX,
                              Eigen::MatrixXd matrixW, 
                              double alpha,
                              int k) {
+
     Eigen::MatrixXd w(2, 2);
 
     matrixX = addAColOfNumber(matrixX, 1.0);
@@ -87,17 +77,11 @@ Eigen::MatrixXd iterrative_W(Eigen::MatrixXd matrixX,
         std::cerr << "Selection en dehors de y" << std::endl;
         exit(1);
     }
-
-    // std::cout << "g(x) : " << std::endl << matrixW + alpha * (-2.0 / matrixX.rows()) * matrixX.transpose() * (matrixY - g(matrixX, matrixW)) << std::endl;
     
     // Version régression linéaire
     // return matrixW + alpha * (-2.0 / matrixX.rows()) * matrixX.transpose() * (matrixY - g(matrixX, matrixW));
 
     // sigmoide
     return matrixW + alpha * (-2.0 / matrixX.rows()) * matrixX.transpose() * (matrixY - g(matrixX, matrixW));
-}
 
-
-Eigen::MatrixXd sigmoid(Eigen::MatrixXd matrixX) {
-    return Eigen::MatrixXd(2, 2);
 }

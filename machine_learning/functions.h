@@ -7,10 +7,14 @@
 
 #include <Eigen/Dense>
 
-double getARandom(double min, double max);
-
 Eigen::MatrixXd addAColOfNumber(Eigen::MatrixXd x, double number);
 
 Eigen::MatrixXd W(Eigen::MatrixXd x, Eigen::MatrixXd y);
 
-Eigen::MatrixXd iterrative_W(Eigen::MatrixXd matrixX, Eigen::MatrixXd matrixY, Eigen::MatrixXd matrixW, double alpha, int k);
+Eigen::MatrixXd g(Eigen::MatrixXd matrixX, Eigen::MatrixXd matrixW);
+
+Eigen::MatrixXd iterrative_W(Eigen::MatrixXd matrixX,
+                             Eigen::MatrixXd matrixY,
+                             Eigen::MatrixXd matrixW,
+                             double alpha,
+                             int k);
