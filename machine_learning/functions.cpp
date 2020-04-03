@@ -50,9 +50,14 @@ Eigen::MatrixXd g(Eigen::MatrixXd matrixX, Eigen::MatrixXd matrixW) {
 }
 
 
-Eigen::MatrixXd j(Eigen::MatrixXd matrixX, Eigen::MatrixXd matrixY, Eigen::MatrixXd matrixW) {
-    // stub
-    return Eigen::MatrixXd(2, 2);
+void j(Eigen::MatrixXd matrixX, Eigen::MatrixXd matrixY, Eigen::MatrixXd matrixW) {
+    
+    // J = 1/n *[ y_T*log(sigmoid(X*W)) - (1-y)_T*log(sigmoid(1-X*W))]
+    
+    Eigen::MatrixXd result = 1 / matrixX.cols()
+                           * ( matrixY.transpose() * matrixColLog(matrixColSigmoid(matrixX * matrixW, 0), 0)
+                           - matrixColMinusOne(matrixY, 0).transpose() * matrixColLog(matrixColSigmoid(matrixColMinusOne(matrixX * matrixW, 0), 0), 0) );
+    std::cout << "J : " << result << std::endl;
 }
 
 
@@ -98,6 +103,7 @@ Eigen::MatrixXd iterrative_W(int steps,
     // sigmoide
     for (int i = 0; i < steps; i++) {
         matrixW = matrixW + alpha * (-1.0 / matrixX.rows()) * matrixX.transpose() * (g(matrixX, matrixW) - matrixY);
+
     }
     return matrixW;
 }

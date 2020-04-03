@@ -14,3 +14,8 @@ double getARandom(double min, double max);
 double sigmoid(double x);
 
 Eigen::MatrixXd matrixColSigmoid(Eigen::MatrixXd matrixX, int col);
+
+Eigen::MatrixXd matrixColLog(Eigen::MatrixXd matrixX, int col);
+
+
+Eigen::MatrixXd matrixColMinusOne(Eigen::MatrixXd matrixX, int col);

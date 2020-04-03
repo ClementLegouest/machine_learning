@@ -66,3 +66,24 @@ Eigen::MatrixXd matrixColLog(Eigen::MatrixXd matrixX, int col) {
 
     return result;
 }
+
+
+Eigen::MatrixXd matrixColMinusOne(Eigen::MatrixXd matrixX, int col) {
+    if (col >= matrixX.cols()) {
+        std::cerr << "index plus grand que le nombre de colonnes" << std::endl;
+        exit(1);
+    }
+
+    if (col < 0) {
+        std::cerr << "index plus petit que 0" << std::endl;
+        exit(1);
+    }
+
+    Eigen::MatrixXd result = matrixX;
+
+    for (int i = 0; i < result.rows(); i++) {
+        result(i, 0) = result(i, 0) - 1;
+    }
+
+    return result;
+}
