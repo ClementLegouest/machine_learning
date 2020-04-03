@@ -23,7 +23,8 @@ int main(int argc, char *argv[]) {
 	displayAMatrix(x, "x");
 	displayAMatrix(y, "y");
 	displayAMatrix(W(x, y), "w(x, y)");
-	iterrative_W(x, y, getARandom(-1.00, 1.00), 1);
+	displayAMatrix(iterrative_W(x, y, W(x, y), 0.01, 1), "iterrative_W");
+	displayAMatrix(W(x, y) - iterrative_W(x, y, W(x, y), 0.01, 1), "différence");
 
 	std::cin.get();
 }

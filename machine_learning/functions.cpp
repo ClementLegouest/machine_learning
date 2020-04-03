@@ -43,33 +43,46 @@ Eigen::MatrixXd W(Eigen::MatrixXd x, Eigen::MatrixXd y) {
 }
 
 
-Eigen::MatrixXd g(Eigen::MatrixXd x, Eigen::MatrixXd y) {
-    return x * y;
+Eigen::MatrixXd g(Eigen::MatrixXd matrixX, Eigen::MatrixXd matrixW) {
+    return matrixX * matrixW;
 }
 
 
 // Return a matrix that is the W of two matrixes with the iterrative method
-void iterrative_W(Eigen::MatrixXd x, Eigen::MatrixXd y, double alpha, int k) {
+Eigen::MatrixXd iterrative_W(Eigen::MatrixXd matrixX,
+                             Eigen::MatrixXd matrixY,
+                             Eigen::MatrixXd matrixW, 
+                             double alpha,
+                             int k) {
     Eigen::MatrixXd w(2, 2);
 
     // TODO : Put some code
     // w = w - alpha * (-2.0 / x.rows()) * x.transpose() * (y - g(x, y));
 
-    x = addAColOfNumber(x, 1.0);
+    matrixX = addAColOfNumber(matrixX, 1.0);
 
-    std::cout << "x.rows() : " << x.rows() << " and y.rows() : " << y.rows() << std::endl;
+    std::cout << "x.rows() : " << matrixX.rows() << " and y.rows() : " << matrixY.rows() << std::endl;
 
-    if (k < 1 || k > x.rows()) {
+    if (matrixX.rows() != matrixY.rows()) {
+        std::cerr << "MatrixX and matrixY" << std::endl;
+        exit(1);
+    }
+
+    if (k < 1 || k > matrixX.rows()) {
         std::cerr << "Selection en dehors de x" << std::endl;
         exit(1);
     }
 
-    if (k < 1 || k > y.rows()) {
+    if (k < 1 || k > matrixY.rows()) {
         std::cerr << "Selection en dehors de y" << std::endl;
         exit(1);
     }
 
-    Eigen::MatrixXd result(x.rows(), 1);
+    // std::cout << "g(x) : " << std::endl << matrixW + alpha * (-2.0 / matrixX.rows()) * matrixX.transpose() * (matrixY - g(matrixX, matrixW)) << std::endl;
+    return matrixW + alpha * (-2.0 / matrixX.rows()) * matrixX.transpose() * (matrixY - g(matrixX, matrixW));
+}
 
-    std::cout << "x.row(k) : " << x.row(k) << " y.row(k) : " << y.row(k) << std::endl;
+
+Eigen::MatrixXd sigmoid(Eigen::MatrixXd matrixX) {
+    return Eigen::MatrixXd(2, 2);
 }
