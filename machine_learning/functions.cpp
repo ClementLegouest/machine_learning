@@ -6,12 +6,18 @@
 #include <iostream>
 #include <Eigen/Dense>
 #include <fstream>
+#include <cmath>
 #include "utils.h"
 
 
 // Return a random number between min and max
 double getARandom(double min, double max) {
     return (rand() / (double)RAND_MAX) * (max - min) + min;
+}
+
+
+double sigmoid(double x) {
+    return 1.0 / ( 1.0 + exp(-x));
 }
 
 
@@ -31,20 +37,27 @@ Eigen::MatrixXd addAColOfNumber(Eigen::MatrixXd matrix, double number) {
 
 
 // Return a matrix that is the W of two matrixes
-Eigen::MatrixXd W(Eigen::MatrixXd x, Eigen::MatrixXd y) {
+Eigen::MatrixXd W(Eigen::MatrixXd matrixX, Eigen::MatrixXd matrixY) {
 
-    x = addAColOfNumber(x, 1.0);
+    matrixX = addAColOfNumber(matrixX, 1.0);
 
-    Eigen::MatrixXd transposedX = x.transpose();
+    Eigen::MatrixXd transposedMatrixX = matrixX.transpose();
 
-    Eigen::MatrixXd result = (((transposedX * x).inverse()) * transposedX) * y;
+    Eigen::MatrixXd matrixResult = (((transposedMatrixX * matrixX).inverse()) * transposedMatrixX) * matrixY;
 
-    return result;
+    return matrixResult;
 }
 
 
 Eigen::MatrixXd g(Eigen::MatrixXd matrixX, Eigen::MatrixXd matrixW) {
-    return matrixX * matrixW;
+    
+    Eigen::MatrixXd result = matrixX * matrixW;
+
+    for (int i = 0; i < result.rows(); i++) {
+        result(i, 0) = sigmoid(result(i, 0));
+    }
+
+    return result;
 }
 
 
@@ -55,9 +68,6 @@ Eigen::MatrixXd iterrative_W(Eigen::MatrixXd matrixX,
                              double alpha,
                              int k) {
     Eigen::MatrixXd w(2, 2);
-
-    // TODO : Put some code
-    // w = w - alpha * (-2.0 / x.rows()) * x.transpose() * (y - g(x, y));
 
     matrixX = addAColOfNumber(matrixX, 1.0);
 
@@ -79,6 +89,11 @@ Eigen::MatrixXd iterrative_W(Eigen::MatrixXd matrixX,
     }
 
     // std::cout << "g(x) : " << std::endl << matrixW + alpha * (-2.0 / matrixX.rows()) * matrixX.transpose() * (matrixY - g(matrixX, matrixW)) << std::endl;
+    
+    // Version régression linéaire
+    // return matrixW + alpha * (-2.0 / matrixX.rows()) * matrixX.transpose() * (matrixY - g(matrixX, matrixW));
+
+    // sigmoide
     return matrixW + alpha * (-2.0 / matrixX.rows()) * matrixX.transpose() * (matrixY - g(matrixX, matrixW));
 }
 
