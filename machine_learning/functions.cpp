@@ -51,7 +51,7 @@ Eigen::MatrixXd g(Eigen::MatrixXd matrixX, Eigen::MatrixXd matrixW) {
 
 
 Eigen::MatrixXd initW(Eigen::MatrixXd matrixX) {
-    Eigen::MatrixXd result(matrixX.rows(), 1);
+    Eigen::MatrixXd result(matrixX.cols(), 1);
 
     for (int i = 0; i < result.rows(); i++) {
         result(i, 0) = getARandom(-1.00, 1.00);
@@ -91,7 +91,7 @@ Eigen::MatrixXd iterrative_W(int steps,
 
     // sigmoide
     for (int i = 0; i < steps; i++) {
-        matrixW + alpha * (-1.0 / matrixX.rows()) * matrixX.transpose() * (g(matrixX, matrixW) - matrixY);
+        matrixW = matrixW + alpha * (-1.0 / matrixX.rows()) * matrixX.transpose() * (g(matrixX, matrixW) - matrixY);
     }
     return matrixW;
 }
