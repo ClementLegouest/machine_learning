@@ -103,7 +103,7 @@ Eigen::MatrixXd iterrative_W(int steps,
     // sigmoide
     for (int i = 0; i < steps; i++) {
         matrixW = matrixW + alpha * (-1.0 / matrixX.rows()) * matrixX.transpose() * (g(matrixX, matrixW) - matrixY);
-
+        displayAMatrix(matrixW, "MatrixW step " + std::to_string(i + 1) + " : ");
     }
     return matrixW;
 }
