@@ -50,18 +50,26 @@ Eigen::MatrixXd g(Eigen::MatrixXd matrixX, Eigen::MatrixXd matrixW) {
 }
 
 
+Eigen::MatrixXd initW(Eigen::MatrixXd matrixX) {
+    Eigen::MatrixXd result(matrixX.rows(), 1);
+
+    for (int i = 0; i < result.rows(); i++) {
+        result(i, 0) = getARandom(-1.00, 1.00);
+    }
+
+    return result;
+}
+
+
 // Return a matrix that is the W of two matrixes with the iterrative method
-Eigen::MatrixXd iterrative_W(Eigen::MatrixXd matrixX,
+Eigen::MatrixXd iterrative_W(int steps,
+                             Eigen::MatrixXd matrixX,
                              Eigen::MatrixXd matrixY,
-                             Eigen::MatrixXd matrixW, 
                              double alpha,
                              int k) {
 
-    Eigen::MatrixXd w(2, 2);
-
     matrixX = addAColOfNumber(matrixX, 1.0);
-
-    std::cout << "x.rows() : " << matrixX.rows() << " and y.rows() : " << matrixY.rows() << std::endl;
+    Eigen::MatrixXd matrixW = initW(matrixX);
 
     if (matrixX.rows() != matrixY.rows()) {
         std::cerr << "MatrixX and matrixY" << std::endl;
@@ -82,6 +90,8 @@ Eigen::MatrixXd iterrative_W(Eigen::MatrixXd matrixX,
     // return matrixW + alpha * (-2.0 / matrixX.rows()) * matrixX.transpose() * (matrixY - g(matrixX, matrixW));
 
     // sigmoide
-    return matrixW + alpha * (-2.0 / matrixX.rows()) * matrixX.transpose() * (matrixY - g(matrixX, matrixW));
-
+    for (int i = 0; i < steps; i++) {
+        matrixW + alpha * (-1.0 / matrixX.rows()) * matrixX.transpose() * (g(matrixX, matrixW) - matrixY);
+    }
+    return matrixW;
 }

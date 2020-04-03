@@ -9,6 +9,7 @@
 
 void displayAMatrix(Eigen::MatrixXd x, std::string name) {
     std::cout << "Matrice " << name << " : rows : " << x.rows() << ", columns : " << x.cols() << " : " << std::endl << x << std::endl;
+    std::cout << "-------------------------------------------------------" << std::endl;
 }
 
 
